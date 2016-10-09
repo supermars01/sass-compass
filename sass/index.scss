@@ -1,0 +1,30 @@
+@charset "UTF-8";
+@import "normalize";//引入normalize 替换compass默认库 reset
+$icon-sprite-dimensions: true;
+@import "compass/utilities/sprites"; //加载 compass sprites 模块
+@import "icon/*.png"; 
+@include all-icon-sprites;
+@import "compass/utilities/general";
+// @import "compass/autoprefixer";
+$browser-minimum-versions:("ie":"6");
+$htmlFontSize: 10px;
+html{
+font-size: $htmlFontSize;
+}
+@function strip-unit($number){
+    @return $number / ($number*0 +1);
+}
+@function add-rem-unit($number){
+    	$htmlfs: strip-unit($htmlFontSize);
+    	$num: strip-unit($number);
+    	@return  ($num / $htmlfs)* 1rem;
+}
+
+@mixin sprite-dimensions($map, $sprite) {
+      height: add-rem-unit(image-height(sprite-file($map, $sprite)));
+      width: add-rem-unit(image-width(sprite-file($map, $sprite)));
+}
+.test{
+    @include icon-sprites(load);
+    @include float(left);
+}

@@ -1,0 +1,121 @@
+@import "compass/utilities/sprites/base";
+
+// General Sprite Defaults
+// You can override them before you import this file.
+$icon-sprite-dimensions : false !default;
+$icon-use-percentages   : false !default;
+$icon-position          : 0% !default;
+$icon-spacing           : 0 !default;
+$icon-repeat            : no-repeat !default;
+$icon-prefix            : '' !default;
+$icon-clean-up          : true !default;
+$icon-layout            : vertical !default;
+$icon-inline            : false !default;
+$icon-sort-by           : 'none' !default;
+$icon-class-separator   : $default-sprite-separator !default;
+$icon-sprite-base-class : ".icon#{$icon-class-separator}sprite" !default;
+
+  
+ // These variables control the generated sprite output
+ // You can override them selectively before you import this file.
+ 
+   $icon-share10-position: $icon-position !default;
+   $icon-share10-spacing:  $icon-spacing !default;
+   $icon-share10-repeat:   $icon-repeat !default;
+ 
+   $icon-share11-position: $icon-position !default;
+   $icon-share11-spacing:  $icon-spacing !default;
+   $icon-share11-repeat:   $icon-repeat !default;
+ 
+   $icon-share12-position: $icon-position !default;
+   $icon-share12-spacing:  $icon-spacing !default;
+   $icon-share12-repeat:   $icon-repeat !default;
+ 
+   $icon-share8-position: $icon-position !default;
+   $icon-share8-spacing:  $icon-spacing !default;
+   $icon-share8-repeat:   $icon-repeat !default;
+ 
+   $icon-share9-position: $icon-position !default;
+   $icon-share9-spacing:  $icon-spacing !default;
+   $icon-share9-repeat:   $icon-repeat !default;
+ 
+
+ $icon-sprites: sprite-map("icon/*.png",
+ 
+   $icon-share10-position: $icon-share10-position, 
+   $icon-share10-spacing:  $icon-share10-spacing, 
+   $icon-share10-repeat:   $icon-share10-repeat,
+ 
+   $icon-share11-position: $icon-share11-position, 
+   $icon-share11-spacing:  $icon-share11-spacing, 
+   $icon-share11-repeat:   $icon-share11-repeat,
+ 
+   $icon-share12-position: $icon-share12-position, 
+   $icon-share12-spacing:  $icon-share12-spacing, 
+   $icon-share12-repeat:   $icon-share12-repeat,
+ 
+   $icon-share8-position: $icon-share8-position, 
+   $icon-share8-spacing:  $icon-share8-spacing, 
+   $icon-share8-repeat:   $icon-share8-repeat,
+ 
+   $icon-share9-position: $icon-share9-position, 
+   $icon-share9-spacing:  $icon-share9-spacing, 
+   $icon-share9-repeat:   $icon-share9-repeat,
+ 
+ $layout   : $icon-layout,
+ $cleanup  : $icon-clean-up,
+ $spacing  : $icon-spacing,
+ $position : $icon-position,
+ $sort-by  : $icon-sort-by
+ );
+
+
+// All sprites should extend this class
+// The icon-sprite mixin will do so for you.
+@if $icon-inline {
+  #{$icon-sprite-base-class} {
+    background-image: inline-sprite($icon-sprites);
+  } 
+} @else {
+  #{$icon-sprite-base-class} {
+    background-image: sprite-url($icon-sprites);
+    background-repeat: no-repeat;
+  }
+}
+//sass functions to return the dimensions of a sprite image as units
+
+  @function icon-sprite-width($name) {
+    @return sprite-width($icon-sprites, $name);
+  }
+
+  @function icon-sprite-height($name) {
+    @return sprite-height($icon-sprites, $name);
+  }
+
+
+// Use this to set the dimensions of an element
+// based on the size of the original image.
+@mixin icon-sprite-dimensions($name) {
+  @include sprite-dimensions($icon-sprites, $name)
+}
+
+// Move the background position to display the sprite.
+@mixin icon-sprite-position($name, $offset-x: 0, $offset-y: 0, $use-percentages: $icon-use-percentages) {
+  @include sprite-background-position($icon-sprites, $name, $offset-x, $offset-y, $use-percentages)
+}
+
+// Extends the sprite base class and set the background position for the desired sprite.
+// It will also apply the image dimensions if $dimensions is true.
+@mixin icon-sprite($name, $dimensions: $icon-sprite-dimensions, $offset-x: 0, $offset-y: 0, $use-percentages: $icon-use-percentages, $separator: $icon-class-separator) {
+  @extend #{$icon-sprite-base-class};
+  @include sprite($icon-sprites, $name, $dimensions, $offset-x, $offset-y, $use-percentages, $separator: $separator);
+}
+
+@mixin icon-sprites($sprite-names, $dimensions: $icon-sprite-dimensions, $prefix: sprite-map-name($icon-sprites), $offset-x: 0, $offset-y: 0, $use-percentages: $icon-use-percentages, $separator: $icon-class-separator) {
+  @include sprites($icon-sprites, $sprite-names, $icon-sprite-base-class, $dimensions, $prefix, $offset-x, $offset-y, $use-percentages, $separator: $separator)
+}
+
+// Generates a class for each sprited image.
+@mixin all-icon-sprites($dimensions: $icon-sprite-dimensions, $prefix: sprite-map-name($icon-sprites), $offset-x: 0, $offset-y: 0, $use-percentages: $icon-use-percentages, $separator: $icon-class-separator) {
+  @include icon-sprites(share10 share11 share12 share8 share9, $dimensions, $prefix, $offset-x, $offset-y, $use-percentages, $separator: $separator);
+}
