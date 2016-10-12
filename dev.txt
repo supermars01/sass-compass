@@ -1,3 +1,0 @@
-1\ first commit from superCodingMars
-2\ second commit from supermars
-3\three commit from superCodingMars
